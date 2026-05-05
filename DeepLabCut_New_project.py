@@ -20,12 +20,12 @@ config_path = deeplabcut.create_new_project('anopheles','zw', video_path, copy_v
 print(config_path, sep = "\n")
 
 
-#### Add videos & Extract frames for labelling
+##### Add videos & Extract frames for labelling
 deeplabcut.add_new_videos(config_path, video_path, copy_videos=False)
 deeplabcut.extract_frames(config_path, mode='automatic', algo='uniform', userfeedback=False, crop=True)
 deeplabcut.label_frames(config_path)
 
-### Create new training session
+##### Create new training session
 deeplabcut.merge_datasets(config_path)
 deeplabcut.create_multianimaltraining_dataset(config_path, net_type='dlcrnet_ms5', num_shuffles=2, crop_size=(1000,1000))
 deeplabcut.train_network(config_path, allow_growth=True, displayiters=500, saveiters=2500, shuffle=1, maxiters=80000)
