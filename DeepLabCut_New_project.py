@@ -14,7 +14,7 @@ if gpus:
     print(e)
 
 ##### Creating New project
-video_path = glob.glob('/mnt/DATA2/zhong/BiteOScope_Data/20230621_test_An_Gamb/*Cage*.mp4')
+video_path = glob.glob('/Your/Path/To/Your/Video/*.mp4')
 print(video_path, sep = "\n")
 config_path = deeplabcut.create_new_project('anopheles','zw', video_path, copy_videos=False, multianimal=True) 
 print(config_path, sep = "\n")
@@ -39,6 +39,6 @@ deeplabcut.refine_labels(config_path)
 deeplabcut.analyze_videos(config_path, videos, shuffle=1, batchsize=16, auto_track=False, dynamic=(True, 0.5, 100))
 
 ##### Extract Outliers
-pickle = glob.glob('/mnt/DATA/baik/videos/A_0804*full.pickle')
+pickle = glob.glob('Your/Path/To/Your/Video/*.pickle')
 print(pickle)
 deeplabcut.find_outliers_in_raw_data(config_path, pickle[0], videos[0], extraction_algo='uniform', pcutoff=0.1, with_annotations=True)
