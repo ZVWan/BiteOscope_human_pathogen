@@ -1,0 +1,6 @@
+model_checkpoint_path: "/mnt/DATA2/zhong/anopheles-zw-2023-07-02/dlc-models/iteration-2/anophelesJul2-trainset95shuffle1/train/snapshot-80000"
+all_model_checkpoint_paths: "/mnt/DATA2/zhong/anopheles-zw-2023-07-02/dlc-models/iteration-2/anophelesJul2-trainset95shuffle1/train/snapshot-70000"
+all_model_checkpoint_paths: "/mnt/DATA2/zhong/anopheles-zw-2023-07-02/dlc-models/iteration-2/anophelesJul2-trainset95shuffle1/train/snapshot-72500"
+all_model_checkpoint_paths: "/mnt/DATA2/zhong/anopheles-zw-2023-07-02/dlc-models/iteration-2/anophelesJul2-trainset95shuffle1/train/snapshot-75000"
+all_model_checkpoint_paths: "/mnt/DATA2/zhong/anopheles-zw-2023-07-02/dlc-models/iteration-2/anophelesJul2-trainset95shuffle1/train/snapshot-77500"
+all_model_checkpoint_paths: "/mnt/DATA2/zhong/anopheles-zw-2023-07-02/dlc-models/iteration-2/anophelesJul2-trainset95shuffle1/train/snapshot-80000"

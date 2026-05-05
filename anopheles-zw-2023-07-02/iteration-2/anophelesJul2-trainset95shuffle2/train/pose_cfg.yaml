@@ -1,0 +1,369 @@
+all_joints:
+- - 0
+- - 1
+- - 2
+- - 3
+- - 4
+- - 5
+- - 6
+- - 7
+- - 8
+- - 9
+- - 10
+- - 11
+- - 12
+- - 13
+- - 14
+- - 15
+- - 16
+- - 17
+- - 18
+- - 19
+- - 20
+- - 21
+- - 22
+- - 23
+- - 24
+- - 25
+- - 26
+- - 27
+- - 28
+- - 29
+- - 30
+- - 31
+- - 32
+- - 33
+- - 34
+- - 35
+- - 36
+all_joints_names:
+- proboscis1
+- proboscis2
+- proboscis3
+- head
+- antennaR
+- antennaL
+- thorax
+- abdomenC
+- abdomenR
+- abdomenL
+- bottom
+- rightForeLeg1
+- rightForeLeg2
+- rightForeLeg3
+- rightForeLeg4
+- leftForeLeg1
+- leftForeLeg2
+- leftForeLeg3
+- leftForeLeg4
+- rightMidleg1
+- rightMidleg2
+- rightMidleg3
+- rightMidleg4
+- leftMidleg1
+- leftMidleg2
+- leftMidleg3
+- leftMidleg4
+- rightHindleg1
+- rightHindleg2
+- rightHindleg3
+- rightHindleg4
+- leftHindleg1
+- leftHindleg2
+- leftHindleg3
+- leftHindleg4
+- leftMPalp
+- rightMPalp
+alpha_r: 0.02
+apply_prob: 0.5
+batch_size: 8
+contrast:
+  clahe: true
+  claheratio: 0.1
+  histeq: true
+  histeqratio: 0.1
+convolution:
+  edge: false
+  emboss:
+    alpha:
+    - 0.0
+    - 1.0
+    strength:
+    - 0.5
+    - 1.5
+  embossratio: 0.1
+  sharpen: false
+  sharpenratio: 0.3
+crop_sampling: hybrid
+crop_size:
+- 1000
+- 1000
+cropratio: 0.4
+dataset: training-datasets/iteration-2/UnaugmentedDataSet_anophelesJul2/anopheles_zw95shuffle2.pickle
+dataset_type: multi-animal-imgaug
+decay_steps: 30000
+display_iters: 500
+global_scale: 0.8
+init_weights: /home/zhong/anaconda3/envs/DLC_light/lib/python3.8/site-packages/deeplabcut/pose_estimation_tensorflow/models/pretrained/resnet_v1_50.ckpt
+intermediate_supervision: false
+intermediate_supervision_layer: 12
+location_refinement: true
+locref_huber_loss: true
+locref_loss_weight: 0.05
+locref_stdev: 7.2801
+lr_init: 0.0005
+max_input_size: 1500
+max_shift: 0.4
+metadataset: training-datasets/iteration-2/UnaugmentedDataSet_anophelesJul2/Documentation_data-anopheles_95shuffle2.pickle
+min_input_size: 64
+mirror: false
+multi_stage: true
+multi_step:
+- - 0.0001
+  - 7500
+- - 5.0e-05
+  - 12000
+- - 1.0e-05
+  - 200000
+net_type: resnet_50
+num_idchannel: 0
+num_joints: 37
+num_limbs: 111
+optimizer: adam
+pafwidth: 20
+pairwise_huber_loss: false
+pairwise_loss_weight: 0.1
+pairwise_predict: false
+partaffinityfield_graph:
+- - 16
+  - 29
+- - 8
+  - 16
+- - 16
+  - 28
+- - 16
+  - 21
+- - 0
+  - 16
+- - 16
+  - 32
+- - 16
+  - 22
+- - 29
+  - 36
+- - 13
+  - 29
+- - 12
+  - 29
+- - 6
+  - 29
+- - 1
+  - 29
+- - 25
+  - 29
+- - 9
+  - 29
+- - 24
+  - 29
+- - 22
+  - 29
+- - 7
+  - 29
+- - 21
+  - 30
+- - 21
+  - 31
+- - 5
+  - 30
+- - 14
+  - 30
+- - 24
+  - 30
+- - 7
+  - 30
+- - 30
+  - 36
+- - 15
+  - 30
+- - 10
+  - 23
+- - 10
+  - 20
+- - 7
+  - 10
+- - 10
+  - 31
+- - 8
+  - 10
+- - 5
+  - 10
+- - 23
+  - 27
+- - 19
+  - 23
+- - 2
+  - 23
+- - 13
+  - 23
+- - 5
+  - 23
+- - 3
+  - 23
+- - 23
+  - 36
+- - 12
+  - 23
+- - 6
+  - 12
+- - 3
+  - 6
+- - 6
+  - 7
+- - 6
+  - 33
+- - 6
+  - 8
+- - 2
+  - 12
+- - 3
+  - 12
+- - 12
+  - 34
+- - 4
+  - 14
+- - 4
+  - 7
+- - 4
+  - 8
+- - 4
+  - 15
+- - 4
+  - 19
+- - 4
+  - 35
+- - 4
+  - 34
+- - 4
+  - 20
+- - 2
+  - 14
+- - 14
+  - 15
+- - 14
+  - 22
+- - 7
+  - 11
+- - 7
+  - 22
+- - 7
+  - 25
+- - 20
+  - 31
+- - 8
+  - 20
+- - 20
+  - 32
+- - 20
+  - 27
+- - 13
+  - 20
+- - 5
+  - 8
+- - 2
+  - 8
+- - 0
+  - 8
+- - 8
+  - 26
+- - 18
+  - 36
+- - 11
+  - 36
+- - 2
+  - 36
+- - 34
+  - 36
+- - 1
+  - 11
+- - 2
+  - 11
+- - 11
+  - 31
+- - 2
+  - 22
+- - 2
+  - 33
+- - 2
+  - 5
+- - 2
+  - 24
+- - 2
+  - 18
+- - 19
+  - 22
+- - 22
+  - 27
+- - 22
+  - 26
+- - 33
+  - 34
+- - 9
+  - 15
+- - 15
+  - 27
+- - 15
+  - 19
+- - 13
+  - 31
+- - 13
+  - 26
+- - 9
+  - 31
+- - 9
+  - 28
+- - 1
+  - 9
+- - 5
+  - 31
+- - 25
+  - 31
+- - 3
+  - 19
+- - 3
+  - 28
+- - 5
+  - 32
+- - 5
+  - 27
+- - 5
+  - 24
+- - 5
+  - 34
+- - 27
+  - 32
+- - 1
+  - 27
+- - 18
+  - 19
+- - 32
+  - 34
+- - 24
+  - 34
+- - 18
+  - 25
+- - 18
+  - 32
+- - 1
+  - 26
+- - 17
+  - 35
+partaffinityfield_predict: true
+pos_dist_thresh: 17
+pre_resize: []
+project_path: /mnt/DATA2/zhong/anopheles-zw-2023-07-02
+rotation: 25
+rotratio: 0.4
+save_iters: 10000
+scale_jitter_lo: 0.5
+scale_jitter_up: 1.25
+weigh_only_present_joints: false
