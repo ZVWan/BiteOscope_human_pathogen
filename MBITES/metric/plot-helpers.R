@@ -1,39 +1,6 @@
-# Plotting helpers for the plot and summary scripts. The CSVs they read are written
-# by the runners, one row per run (see read_complete in _common.R).
+# Plotting helpers for the metric panels.
 
 suppressMessages(library(ggplot2))
-
-# pooled fold per sweep level, baseline = the lowest multiplier of the sweep
-pooled_grid <- function(df) {
-  base <- df[df$mult == min(df$mult), c("seed", "gj_vc")]
-  names(base)[2] <- "b"
-  m <- merge(df, base, by = "seed")
-  m <- m[m$b > 0, ]
-  do.call(rbind, lapply(sort(unique(m$mult)), function(mm) {
-    z <- m[m$mult == mm, ]
-    ci <- pooled_fold(z$gj_vc, z$b)
-    data.frame(x = mm, est = ci[["est"]], lo = ci[["lo"]], hi = ci[["hi"]])
-  }))
-}
-
-# the baseline group is called baseline04 in the manuscript points file and
-# baseline in the DENV one
-baseline_name <- function(points) {
-  nm <- grep("^baseline", unique(points$scenario), value = TRUE)
-  if (!length(nm)) stop("no baseline group in the points file")
-  nm[1]
-}
-
-# pooled fold for one exact scenario against the baseline group, same seeds
-red_point <- function(points, scen) {
-  base_nm <- baseline_name(points)
-  a <- points[points$scenario == scen, c("seed", "gj_vc")]
-  b <- points[points$scenario == base_nm, c("seed", "gj_vc")]
-  m <- merge(a, b, by = "seed")
-  m <- m[m$gj_vc.y > 0, ]
-  ci <- pooled_fold(m$gj_vc.x, m$gj_vc.y)
-  data.frame(est = ci[["est"]], lo = ci[["lo"]], hi = ci[["hi"]], n = nrow(m))
-}
 
 # ---- devices and style -------------------------------------------------------
 
@@ -63,12 +30,6 @@ theme_panel <- function(base_size = 12) {
           plot.margin = margin(12, 14, 10, 10))
 }
 
-# y label shared by the fold panels
-fold_axis <- function() {
-  scale_y_continuous("Garrett-Jones VC vs. baseline (pooled fold)",
-                     labels = function(z) paste0(z, "\u00d7"))
-}
-
 # one panel: pooled fold curve over a behavioural multiplier, plus one exact point
 panel_plot <- function(pg, rp, col, title, sub, xlab, label = TRUE) {
   g <- ggplot(pg, aes(x)) +
@@ -86,6 +47,5 @@ panel_plot <- function(pg, rp, col, title, sub, xlab, label = TRUE) {
                          size = 3.2, colour = scen_red)
   }
   g + scale_x_continuous(xlab, breaks = pg$x, labels = paste0(pg$x, "\u00d7")) +
-    fold_axis() +
     labs(title = title, subtitle = sub) + theme_panel()
 }

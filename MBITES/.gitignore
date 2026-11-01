@@ -1,0 +1,7 @@
+.Rhistory
+.RData
+.Rproj.user/
+Rplots.pdf
+*.log
+metric/STOP
+metric/results/*.pdf

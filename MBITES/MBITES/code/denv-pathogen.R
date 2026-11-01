@@ -24,10 +24,10 @@ DENV_HUMAN_INCUBATION_DAYS <- 6L
 DENV_HUMAN_INFECTIOUS_DAYS <- 5L
 DENV_HUMAN_CLEARANCE_DAYS <- DENV_HUMAN_INCUBATION_DAYS + DENV_HUMAN_INFECTIOUS_DAYS
 
-# requires the caller to have set SCRIPT_DIR (every runner and plot script in this
-# folder does), which is how the shared code finds the manuscript folder
-if (!exists("SCRIPT_DIR")) stop("SCRIPT_DIR is not set: source this from a runner or plot script in this folder")
-source(file.path(SCRIPT_DIR, "..", "code", "_common.R"))
+# requires the caller to have set SCRIPT_DIR to the model root (the folder that
+# holds code/), which is how the shared code finds the manuscript folder
+if (!exists("SCRIPT_DIR")) stop("SCRIPT_DIR is not set: point it at the model root")
+source(file.path(SCRIPT_DIR, "code", "_common.R"))
 
 apply_denv_settings <- function() {
   priv <- MBITES:::PathogenParameters$.__enclos_env__$private

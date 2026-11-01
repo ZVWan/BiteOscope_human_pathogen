@@ -1,48 +1,84 @@
-# MBITES model code: infection-dependent behavioural manipulation
+# MBITES model code and transmission readouts
 
-Code for the transmission-model part of the manuscript on pathogen-induced
-changes in mosquito behaviour.
+Code for the transmission-model part of the manuscript on pathogen-induced changes
+in mosquito behaviour. The model and the analysis of its transmission output live
+in one tree, so a single checkout is enough to reproduce the reported numbers.
 
 ## Layout
 
-    code/                       
-      _senescence-common.R         model settings, landscape and Garrett-Jones VC readout
-      manipulation-enhanced-probing.R
-                                   rebinds Mosquito_Female methods so that
-                                   probing, engorgement and host-seeking rate
-                                   depend on the mosquito's infection status
+    MBITES/
+      code/
+        _common.R                    settings, run_sim(), EIP pinning
+        denv-pathogen.R              dengue pathogen settings and run_denv()
+        manuscript/
+          _senescence-common.R       model configuration and landscape
+          manipulation-enhanced-probing.R
+                                     infection-dependent probing, engorgement and host-seeking
 
-    30seeds_sweeps/              
-      run_sweep30.R                three Garrett-Jones sweeps, 30 seeds per point
-      run_exact_scenario.R         exact points S2/S3/S4/S5 plus shared baseline
-      run_s6_feedcost.R            S6 trade-off: engorgement boost and survival cost
-      run_s6_feedcost_noboost.R    same sweep without the boost
-      plot_pooled_sweeps30.R       Fig. 4a-c panels
-      plot_feedcost_arms30.R       Fig. 4d panel
-      summary_pooled_values.R      plotted values in one table
+    metric/
+      metric-counter.R               counts infectious probes and human infections per mosquito
+      plot-helpers.R                 plotting helpers
+      run_metric_points.R            exact scenarios, 30 seeds
+      run_metric_all.R               full sweeps and the feed-cost analysis
+      analyse.R                      fold change in the readout, day-60 and day-70
+      plot_metric_panels.R           Figures used in the manuscript
+      results/                       stored runs and the plotted values
+
+## Requirements
+
+R 4.x, the MBITES R package (not on CRAN) and three CRAN packages:
+
+    install.packages(c("futile.logger", "jsonlite", "ggplot2"))
+    remotes::install_github("dd-harp/MBITES", ref = "v1.0", subdir = "MBITES")
+
+The runners default to 12 workers; pass another number as the only argument,
+e.g. `Rscript run_metric_all.R 20`.
 
 ## Running
 
-Each script locates itself, so it can be called from anywhere. Run
-the scripts in 30seeds_sweeps/ rather than sourcing files in code/ directly.
+    Rscript metric/run_metric_points.R
+    Rscript metric/run_metric_all.R
+    Rscript metric/analyse.R
+    Rscript metric/plot_metric_panels.R
 
-    Rscript 30seeds_sweeps/run_sweep30.R 20        
-    Rscript 30seeds_sweeps/run_exact_scenario.R 20
-    Rscript 30seeds_sweeps/run_s6_feedcost.R 20
-    Rscript 30seeds_sweeps/run_s6_feedcost_noboost.R 20
-    Rscript 30seeds_sweeps/plot_pooled_sweeps30.R
-    Rscript 30seeds_sweeps/plot_feedcost_arms30.R
-    Rscript 30seeds_sweeps/summary_pooled_values.R
+Every script locates itself, so it can be called from any directory. The metric
+scripts use the model tree in `MBITES/`; set `MBITES_MODEL_DIR` to point at a
+different copy.
 
+`metric/results/` holds the per-run counters and `metric-values.csv`, the only
+fold-change table.
 
-## Settings
+## Readouts
 
-  - 1000 female mosquitoes, 200 humans, 10% initial human prevalence, 100 days,
-    EIP 14 days, senescence on (sns_a = 0.25, sns_b = 60, onset about 16 days).
-  - Seeds 101, 202, ..., 3030 (30 replicates).
-  - Reported effect: fold change in Garrett-Jones vectorial capacity against a
-    matched uninfected baseline, pooled over the paired seeds
-    (sum(VC manipulated) / sum(VC baseline)), with a paired percentile bootstrap
-    95% CI (B = 2000).
-  - feed_survival is added in manipulation-enhanced-probing.R to represent the per-meal mortality of
-    infectious mosquitoes and is only used for the Fig. 4d analysis.
+**Infectious bites per infected female (B).** The readout used in the manuscript,
+following Cator et al. (2014): the average number of infectious bites an infected
+female delivers in her lifetime, the product of the probability of surviving to
+the transmissible stage of infection and the average number of infectious bites
+per mosquito reaching that stage. It is estimated from the simulated biting
+histories as the total number of infectious probes divided by the number of
+infected females, so females that die before becoming infectious contribute zero.
+A probe by an infectious mosquito counts as an infectious bite because
+transmission in MBITES occurs when the mosquito probes the host and does not
+require a completed blood meal.
+
+## Model settings
+
+- 1000 female mosquitoes, 200 humans, 10% initial human prevalence, 100 days,
+  incubation period 11 days, senescence on (sns_a = 0.25, sns_b = 60, onset
+  about 16 days).
+- Seeds 101, 202, ..., 3030 (30 replicates).
+- Dengue runs: b 0.55, c 0.50, human incubation 6 days, human infectious period
+  5 days; the incubation period stays at 11 days. Values and sources are in
+  `MBITES/code/denv-pathogen.R`.
+- `feed_survival` is added in `manipulation-enhanced-probing.R` as the per-meal
+  mortality of infectious mosquitoes and is used only for the feed-cost analysis.
+
+## License
+
+GNU General Public License v3.0, see `LICENSE`.
+
+The model is built on the MBITES R package (Wu et al., PLoS Comput Biol 2020,
+doi:10.1371/journal.pcbi.1007446). The snapshot in `MBITES/code/manuscript/` is
+derived from that package and is included for reproducibility with attribution;
+copyright in that code remains with its authors. The GPL-3.0 grant covers the
+code written for this study.
